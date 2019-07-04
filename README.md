@@ -11,4 +11,6 @@ Last updated: Jul 01 2019
 | `genmap.cmd`          | chimera           | called by `density_chimera.py` to generate synthetic density          |
 | `natsort.py`          | python            | import from other scripts for natural sort of file names              |
 | `record_plane.cmd`    | chimera           | open in chimera to generate movie of plane snapshot over varying z    | 
+| `write_nth_frame.tcl`\* | vmd               | write every nth frame from trajectory as separate pdb file          |
 
+\*Note: Located in [misc repo](https://github.com/vtlim/misc)
