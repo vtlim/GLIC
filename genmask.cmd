@@ -1,4 +1,5 @@
 # Masking map against protein structure, from Joe Jordan
+# usage: chimera genmask.cmd
 
 # load protein as #0 and map as #1
 open ca_cpt_protein.pdb
