@@ -1,6 +1,8 @@
 # Masking map against protein structure, from Joe Jordan
 # usage: chimera genmask.cmd
 
+# chimera mol ids: 0=protein, 1=orig map, 2=mask, 3=masked map
+
 # load protein as #0 and map as #1
 open ca_cpt_protein.pdb
 open moved.mrc
