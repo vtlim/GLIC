@@ -17,6 +17,7 @@ Last updated: Jul 10 2019
 | `tempy.py`            | python            | example application of moving density with input rotation/translation | 
 | `transformations.py`  | python            | called by `decompose_matrix.py` to decompose 4x4 move matrix          | 
 | `vmd_color_subunit.tcl` | vmd             | color each of five subunits in VMD for when chains not recognized     |
+| `vmd_mask.tcl`          | vmd             | quickly generate/view masked map in vmd; vmd can only write .dx map   |
 | `write_nth_frame.tcl`\* | vmd             | write every nth frame from trajectory as separate pdb file            |
 
 \*Note: Located in [misc repo](https://github.com/vtlim/misc)
