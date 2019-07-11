@@ -5,7 +5,7 @@ import subprocess
 import os
 
 # get list of structures
-files = glob.glob('*_v2_*pdb')
+files = glob.glob('*_03_*pdb')
 files.sort(key=natsort.natural_keys)
 
 # iterate over each

@@ -26,12 +26,14 @@ mol new $mov_pdb
 
 set ref_sel [atomselect 0 "$tmd_sel"]
 set mov_sel [atomselect 1 "$tmd_sel"]
-set mov_all [atomselect 1 "all and not water"]
+#set mov_all [atomselect 1 "all and not water"]
+set mov_all [atomselect 1 "protein"]
 
 set matrix [measure fit $mov_sel $ref_sel]
 
 $mov_all move $matrix
-animate write gro system_dry.gro sel $mov_all
+#animate write gro system_dry.gro sel $mov_all
+animate write pdb system_dry.pdb sel $mov_all
 
 
 # handle water separately since vmd doesn't write moved crds for all (> 99998 = too many?)
