@@ -29,6 +29,7 @@ files.sort(key=natsort.natural_keys)
 
 # assume x-locations are the same across all files (!!)
 yarray = []
+labels = []
 
 # iterate over each
 for f in files:
@@ -44,12 +45,18 @@ for f in files:
     # organize coordinates
     xlist = [float(c['x']) for c in fdict['fsc']['coordinate']]
     ylist = [float(c['y']) for c in fdict['fsc']['coordinate']]
-    yarray.append(ylist)
 
-# plot all fsc curves
-colors = plt.cm.coolwarm(np.linspace(0, 1, len(yarray)))
-for i, y in enumerate(yarray):
-    plt.plot(xlist, y, label=i, c=colors[i])
+    # store data
+    yarray.append(ylist)
+    labels.append(f.split("_")[-1].split(".")[0]) # prefix_label.xml
+
+# define plot colors
+colors = plt.cm.Set1(np.linspace(0, 1, 10))               # discrete
+#colors = plt.cm.coolwarm_r(np.linspace(0, 1, len(yarray))) # diverging
+
+# plot fsc curves
+for i, (y, l) in enumerate(zip(yarray, labels)):
+    plt.plot(xlist, y, label=l, c=colors[i])
 
 plt, ax = plot_format(plt)
 plt.ylabel('correlation', rotation=0, ha='right')
@@ -58,12 +65,13 @@ plt.show()
 
 
 # plot delta fsc curves (ex. y4-y3)
-for i, y in enumerate(yarray):
+# todo: probably can combine with for loop above
+for i, (y, l) in enumerate(zip(yarray, labels)):
     if i==0:
         dy = [0]*len(xlist)
     else:
         dy = np.array(y)-np.array(yarray[i-1])
-    plt.plot(xlist, dy, label=i, c=colors[i])
+    plt.plot(xlist, dy, label=l, c=colors[i])
 
 plt, ax = plot_format(plt)
 plt.ylabel('change in\ncorrelation', rotation=0, ha='right')
