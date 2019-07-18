@@ -11,9 +11,16 @@ def plot_format(plt):
     # set plot limits
 #    plt.ylim(-0.1, 1.1)
 
+    # set figure size
+    plt.gcf().set_size_inches(12,4)
+
     # add grid
     ax = plt.gca()
     ax.grid(axis='y', linewidth=0.5)
+
+    # add x-axis label
+    plt.xlabel("spatial frequency ($\AA^{-1}$)")
+
     return plt, ax
 
 # get list of structures
@@ -40,16 +47,17 @@ for f in files:
     yarray.append(ylist)
 
 # plot all fsc curves
-colors = plt.cm.plasma(np.linspace(0, 1, len(yarray)))
+colors = plt.cm.coolwarm(np.linspace(0, 1, len(yarray)))
 for i, y in enumerate(yarray):
     plt.plot(xlist, y, label=i, c=colors[i])
 
 plt, ax = plot_format(plt)
+plt.ylabel('correlation', rotation=0, ha='right')
+plt.savefig('fsc.png', bbox_inches='tight')
 plt.show()
 
 
 # plot delta fsc curves (ex. y4-y3)
-
 for i, y in enumerate(yarray):
     if i==0:
         dy = [0]*len(xlist)
@@ -58,4 +66,6 @@ for i, y in enumerate(yarray):
     plt.plot(xlist, dy, label=i, c=colors[i])
 
 plt, ax = plot_format(plt)
+plt.ylabel('change in\ncorrelation', rotation=0, ha='right')
+plt.savefig('fsc_delta.png', bbox_inches='tight')
 plt.show()
