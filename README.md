@@ -1,5 +1,5 @@
 # Scripts for project on GLIC fitting to cryo-EM densities
-Last updated: Jul 10 2019
+Last updated: Jul 18 2019
 
 ## Contents
 
@@ -15,6 +15,7 @@ Last updated: Jul 10 2019
 | `natsort.py`          | python            | import from other scripts for natural sort of file names              |
 | `record_plane.cmd`    | chimera           | open in chimera to generate movie of plane snapshot over varying z    |
 | `tempy.py`            | python            | example application of moving density with input rotation/translation | 
+| `tempy_pdb.py`        | python            | related to `tempy.py`; now take *structure* and move to orig map      | 
 | `transformations.py`  | python            | called by `decompose_matrix.py` to decompose 4x4 move matrix          | 
 | `vmd_color_subunit.tcl` | vmd             | color each of five subunits in VMD for when chains not recognized     |
 | `vmd_mask.tcl`          | vmd             | quickly generate/view masked map in vmd; vmd can only write .dx map   |
