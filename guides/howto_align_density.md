@@ -5,14 +5,11 @@ Last edited: Jul 22 2018
 Goal: align density to model before fitting. The opposite approach of aligning the model to the density may not work as well if the periodic box is not aligned with the prinicipal axes (doesn't simulate well) or if the box is off-center (because GROMACS will output it at center and then adjustment may have to be repeated).
 
 Note: Any transformations to the map should ideally be done before moving the density. For example:
-    * Blurring map
-
+ * Blurring map
 ```
 phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=blur_01_orig.mrc resolution=4.1 b_sharpen=-50
 ```
-
-    * Auto-sharpening map
-
+ * Auto-sharpening map
 ```
 phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=shrp_01_orig.mrc resolution=4.1
 ```
@@ -29,8 +26,8 @@ phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=shrp_01_orig.
 vmdt -e /nethome/vlim/Desktop/Project/scripts/align_tmd.tcl -args model_density.pdb model_box.pdb > matrix
 ```
 
-    * Adjust the `align_tmd.tcl` as needed.
-    * The protein and membrane here is printed out separately from the water molecules because with too many waters than VMD can handle, the resulting structure has some waters that are not moved. Though this shouldn't matter since working with the protein only.
+ * Adjust the `align_tmd.tcl` as needed.
+ * The protein and membrane here is printed out separately from the water molecules because with too many waters than VMD can handle, the resulting structure has some waters that are not moved. Though this shouldn't matter since working with the protein only.
 
 3. Extract rotation angles from the 4D transformation matrix. 
 
