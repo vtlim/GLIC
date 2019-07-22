@@ -1,4 +1,4 @@
-# Moving density to align with model for molecular dynamics simulations
+# Move cryo-EM density to align with model
 
 Last edited: Jul 22 2018
 
