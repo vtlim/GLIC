@@ -6,20 +6,23 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_format(plt):
-    plt.legend()
+    plt.legend(fontsize=16, loc=1)
 
     # set plot limits
 #    plt.ylim(-0.1, 1.1)
 
     # set figure size
-    plt.gcf().set_size_inches(12,4)
+    plt.gcf().set_size_inches(18,6)
 
     # add grid
     ax = plt.gca()
     ax.grid(axis='y', linewidth=0.5)
 
     # add x-axis label
-    plt.xlabel("spatial frequency ($\AA^{-1}$)")
+    plt.xlabel("spatial frequency ($\AA^{-1}$)", fontsize=18)
+
+    # increase tick font size
+    ax.tick_params(axis='both', which='major', labelsize=16)
 
     return plt, ax
 
@@ -59,7 +62,7 @@ for i, (y, l) in enumerate(zip(yarray, labels)):
     plt.plot(xlist, y, label=l, c=colors[i])
 
 plt, ax = plot_format(plt)
-plt.ylabel('correlation', rotation=0, ha='right')
+plt.ylabel('correlation', rotation=0, ha='right', fontsize=18)
 plt.savefig('fsc.png', bbox_inches='tight')
 plt.show()
 
@@ -74,6 +77,6 @@ for i, (y, l) in enumerate(zip(yarray, labels)):
     plt.plot(xlist, dy, label=l, c=colors[i])
 
 plt, ax = plot_format(plt)
-plt.ylabel('change in\ncorrelation', rotation=0, ha='right')
+plt.ylabel('change in\ncorrelation', rotation=0, ha='right', fontsize=18)
 plt.savefig('fsc_delta.png', bbox_inches='tight')
 plt.show()
