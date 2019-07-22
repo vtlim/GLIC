@@ -6,10 +6,12 @@ Goal: align density to model before fitting. The opposite approach of aligning t
 
 Note: Any transformations to the map should ideally be done before moving the density. For example:
     * Blurring map
+
 ```
 phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=blur_01_orig.mrc resolution=4.1 b_sharpen=-50
 ```
     * Auto-sharpening map
+
 ```
 phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=shrp_01_orig.mrc resolution=4.1
 ```
@@ -18,12 +20,13 @@ phenix.auto_sharpen ../GLIC_pH3_half1_unfil.mrc sharpened_map_file=shrp_01_orig.
 1. Start with a model that is well-aligned to the electron density. 
     * If it isn't, [manually adjust in VMD](https://www.ks.uiuc.edu/Research/vmd/current/ug/node33.html).
     * Relevant hot keys include `8` and `c`.
-    * Save the protein with no hydrogen atoms.
+    * Save the protein with only heavy atoms.
 
 2. Compute the transformation matrix between the (model that is aligned to the density) and the (model where you want the density to go).
 ```
 vmdt -e /nethome/vlim/Desktop/Project/scripts/align_tmd.tcl -args model_density.pdb model_box.pdb > matrix
 ```
+
     * Adjust the `align_tmd.tcl` as needed.
     * The protein and membrane here is printed out separately from the water molecules because with too many waters than VMD can handle, the resulting structure has some waters that are not moved. Though this shouldn't matter since working with the protein only.
 
