@@ -14,7 +14,7 @@ molmap protein 10
 mask ones #0.1
 
 # multiply the input map with the mask
-vop multiply #2,1
+vop multiply #2,1 onGrid #1
 
 # save the resulting map
 volume #3 save output.mrc
