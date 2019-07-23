@@ -6,7 +6,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 def plot_format(plt):
-    plt.legend(fontsize=16, loc=1)
+    plt.legend(fontsize=16, loc=1)         # discrete
+#    plt.legend(fontsize=16, loc=1, ncol=2)  # diverging
 
     # set plot limits
 #    plt.ylim(-0.1, 1.1)
