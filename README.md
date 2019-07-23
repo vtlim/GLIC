@@ -1,5 +1,5 @@
 # Scripts for project on GLIC fitting to cryo-EM densities
-Last updated: Jul 18 2019
+Last updated: Jul 23 2019
 
 ## Contents
 
@@ -29,5 +29,6 @@ For files that are not actively used in the project but may come into handy.
 
 | file                  | use with          | description                                                           |
 |-----------------------|-------------------|-----------------------------------------------------------------------|
+| `contact_map.py`      | python            | generate contact map (not distance map) on two PDBs to compare        |
 | `density_gromaps.sh`  | bash, gromaps     | create run file for gromaps to write densities from gromacs trajectory|
 
