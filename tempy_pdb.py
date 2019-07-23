@@ -25,6 +25,9 @@ structure_instance.rotate_by_axis_angle(0,0,1, np.rad2deg(-2.125868534775962), c
 structure_instance.rotate_by_axis_angle(0,1,0, np.rad2deg(-0.0005038746980934731), com=com)
 structure_instance.rotate_by_axis_angle(1,0,0, np.rad2deg(3.1396619777494124), com=com)
 
+# save structure
+structure_instance.write_to_PDB('moved.pdb')
+
 # create the map
 blurrer = StructureBlurrer()
 sim_map = blurrer.gaussian_blur(structure_instance, 2.49, densMap=target_map)
