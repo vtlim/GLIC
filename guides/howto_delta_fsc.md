@@ -1,6 +1,6 @@
 # Evaluate change in Fourier shell correlation (FSC) during fitting simulation
 
-Last edited: Jul 22 2018
+Last edited: Jul 22 2019
 
 Goal: Assess map-model agreement from density fitting. In this example, I have a series of three simulations which continue from each other. The first two are 1 ns each, and the third is 5 ns. My objective is to calculate the FSC at regular intervals during the fitting simulations and see how the FSC curves change over time.
 

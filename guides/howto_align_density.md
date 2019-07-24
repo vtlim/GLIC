@@ -1,6 +1,6 @@
 # Move cryo-EM density to align with model
 
-Last edited: Jul 22 2018
+Last edited: Jul 22 2019
 
 Goal: align density to model before fitting. The opposite approach of aligning the model to the density may not work as well if the periodic box is not aligned with the prinicipal axes (doesn't simulate well) or if the box is off-center (because GROMACS will output it at center and then adjustment may have to be repeated).
 
