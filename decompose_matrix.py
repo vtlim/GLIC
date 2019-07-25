@@ -1,4 +1,7 @@
 
+import sys
+sys.path.insert(0, "/nethome/vlim/Desktop/Project/scripts/")
+
 import transformations
 import numpy as np
 
