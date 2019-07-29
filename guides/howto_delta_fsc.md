@@ -10,7 +10,7 @@ Goal: Assess map-model agreement from density fitting. In this example, I have a
 vmdt -e /nethome/vlim/Desktop/Project/gitmisc/vmd/write_nth_frame.tcl -args 6 ph3_01 ../../../01_reference/ca_cpt.gro ../densfit01.xtc ../densfit02.part0001.xtc ../densfit03.xtc
 ```
 
-Alternatively, from a single frame .gro or .pdb file, write out just protein heavy atoms with something along the lines of:
+From a single frame .gro or .pdb file, write out only protein heavy atoms with something along the lines of:
 
 ```
 gmx trjconv -f densfit02_1000ps.gro -s ../../densfit02.tpr -o ph5_01_fin.pdb
@@ -41,6 +41,12 @@ for k in {0..13}; do echo $k; python tempy_pdb.py GLIC_pH3_half1_unfil.mrc ph3_0
 cp /nethome/vlim/Desktop/Project/scripts/genmap.cmd .
 vi genmap.cmd
 python /nethome/vlim/Desktop/Project/scripts/density_chimera.py
+```
+
+For a single frame calculation:
+
+```
+chimera --nogui fixed.pdb genmap.cmd
 ```
 
 5. Calculate FSCs using [webserver](https://www.ebi.ac.uk/pdbe/emdb/validation/fsc/) and download XML files.
