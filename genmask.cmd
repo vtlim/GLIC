@@ -1,5 +1,5 @@
 # Masking map against protein structure, from Joe Jordan
-# usage: chimera genmask.cmd
+# usage: chimera --nogui genmask.cmd
 
 # chimera mol ids: 0=protein, 1=orig map, 2=mask, 3=masked map
 
