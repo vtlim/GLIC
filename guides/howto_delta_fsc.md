@@ -10,6 +10,12 @@ Goal: Assess map-model agreement from density fitting. In this example, I have a
 vmdt -e /nethome/vlim/Desktop/Project/gitmisc/vmd/write_nth_frame.tcl -args 6 ph3_01 ../../../01_reference/ca_cpt.gro ../densfit01.xtc ../densfit02.part0001.xtc ../densfit03.xtc
 ```
 
+Alternatively, from a single frame .gro or .pdb file, write out just protein heavy atoms with something along the lines of:
+
+```
+gmx trjconv -f densfit02_1000ps.gro -s ../../densfit02.tpr -o ph5_01_fin.pdb
+```
+
 2. Remove virtual sites.
 
 ```
@@ -41,8 +47,7 @@ python /nethome/vlim/Desktop/Project/scripts/density_chimera.py
 
 6. Plot delta FSCs.
 
-````
+```
 conda activate base
 python /nethome/vlim/Desktop/Project/scripts/fsc_delta.py
 ```
-
