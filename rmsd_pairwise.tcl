@@ -40,7 +40,8 @@ $mov_all move $matrix
 set nres0 [llength [lsort -unique -integer [[atomselect 0 all] get residue]]]
 set nres1 [llength [lsort -unique -integer [[atomselect 1 all] get residue]]]
 
-if {![$nres0 == $nres1]} {
+# without expr, VMD doesn't evaluate bc: invalid command name "1555"
+if {! [expr $nres0 == $nres1] } {
     puts "\n\nERROR: number of residues do not match. $nres0 $nres1\n"
     exit
 }
@@ -56,6 +57,13 @@ for {set i 0} {$i < $nres0} {incr i} {
     for {set j 0} {$j < $nres0} {incr j} {
 
         set sel1 [atomselect 1 "backbone and residue $j"]
+
+        # happens for the terminal residue in each subunit
+        if { [expr [$sel0 num] == 0] || [expr [$sel1 num] == 0] } {
+            puts "\n\nWARNING: zero atoms read for residue pair $i $j"
+            set curr_line "$curr_line\tNaN"
+            continue
+        }
 
         set rmsdsel [format "%.4f" [measure rmsd $sel1 $sel0]]
         set curr_line "$curr_line\t$rmsdsel"
