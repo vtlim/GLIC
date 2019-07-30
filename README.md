@@ -14,6 +14,7 @@ Last updated: Jul 30 2019
 | `genmask.cmd`         | chimera           | generate mask for map from around a reference protein structure       |
 | `natsort.py`          | python            | import from other scripts for natural sort of file names              |
 | `record_plane.cmd`    | chimera           | open in chimera to generate movie of plane snapshot over varying z    |
+| `rmsd_pairwise.tcl`   | vmd               | compute all by all pairwise rmsd of protein residues
 | `tempy.py`            | python            | example application of moving density with input rotation/translation | 
 | `tempy_pdb.py`        | python            | related to `tempy.py`; now take *structure* and move to orig map      | 
 | `transformations.py`  | python            | called by `decompose_matrix.py` to decompose 4x4 move matrix          | 
