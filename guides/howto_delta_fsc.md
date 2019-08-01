@@ -10,9 +10,10 @@ Goal: Assess map-model agreement from density fitting. In this example, I have a
 vmdt -e /nethome/vlim/Desktop/Project/gitmisc/vmd/write_nth_frame.tcl -args 6 ph3_01 ../../../01_reference/ca_cpt.gro ../densfit01.xtc ../densfit02.part0001.xtc ../densfit03.xtc
 ```
 
-From a single frame .gro or .pdb file, write out only protein heavy atoms with something along the lines of:
+To get a single frame .gro or .pdb file, write out only protein heavy atoms with something along the lines of:
 
 ```
+gmx trjconv -s orig01.tpr -f orig01.xtc -o orig01_lastframe.gro -b 1100 -e 1100
 gmx trjconv -f densfit02_1000ps.gro -s ../../densfit02.tpr -o ph5_01_fin.pdb
 ```
 
