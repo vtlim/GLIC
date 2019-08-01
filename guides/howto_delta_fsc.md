@@ -13,8 +13,8 @@ vmdt -e /nethome/vlim/Desktop/Project/gitmisc/vmd/write_nth_frame.tcl -args 6 ph
 To get a single frame .gro or .pdb file, write out only protein heavy atoms with something along the lines of:
 
 ```
-gmx trjconv -s orig01.tpr -f orig01.xtc -o orig01_lastframe.gro -b 1100 -e 1100  # whole system at 1100 ps
-gmx trjconv -s orig01.tpr -f orig01_lastframe.gro -o ph5_01_fin.pdb              # protein only
+gmx trjconv -s orig01.tpr -f orig01.xtc -o orig01_1000ps.gro -b 1100 -e 1100  # system at 1000 ps
+gmx trjconv -s orig01.tpr -f orig01_1000ps.gro -o ph5_01_fin.pdb              # protein only
 ```
 
 2. Remove virtual sites.
