@@ -20,14 +20,79 @@ def get_range(array):
 
     return absval
 
-def map_diff(file1, file2):
+
+def extract_matrix_residue(array, rlist):
+
+    # sort list of residue numbers, first line should be 0
+    rlist = [int(x) for x in rlist]
+    rlist = np.sort(np.array(rlist))
+
+    # TODO: IMPROVE THIS. np.take? np.compress?
+
+    # take relevant rows in 2d array
+    print("Initial dimensions: {}".format(array.shape))
+    print(rlist, array)
+    new_rows = array[rlist[0]]
+    for i in rlist[1:]:
+        array_i = array[i]
+        new_rows = np.vstack((new_rows, array_i))
+    print("Extracted to dimensions: {}".format(new_rows.shape))
+
+    # take relevant columns in matrix
+    print(new_rows)
+    old_cols = np.copy(new_rows).T
+    new_cols = old_cols[rlist[0]]
+    for i in rlist[1:]:
+        array_i = old_cols[i]
+        new_cols = np.vstack((new_cols, array_i))
+    fin_array = new_cols.T
+    print("Extracted to dimensions: {}".format(fin_array.shape))
+
+    return fin_array
+
+def extract_matrix_resid(array, rlist, parts, each, first):
+    """
+
+    Example:
+    - homopentamer (parts=5)
+    - 311 residues in each subunit (each=311)
+    - first residue is number 5 (first=5)
+
+    """
+
+    # sort list of resid numbers
+    rlist = [int(x) for x in rlist]
+    rlist = np.sort(np.array(rlist)) - first
+
+    # convert resid numbers (single subunit) to line numbers (all units)
+    expanded = np.copy(rlist)
+    print("expanded: ", expanded)
+    for i in range(1, parts):
+        print(i, each, rlist)
+        subunit_i = i*each + rlist
+        expanded = np.vstack((expanded, subunit_i))
+
+    fin_array = extract_matrix_residue(array, expanded)
+
+    return fin_array
+
+def map_diff(flist, residue, resid, parts, each, first):
+
     # parse data from txt file
-    array1 = parse_txt_file(file1)
-    array2 = parse_txt_file(file2)
+    array1 = parse_txt_file(flist[0])
+    array2 = parse_txt_file(flist[1])
     diff = array2 - array1
 
     # define heat map limits symmetrically so that value of zero is white
     absval = get_range(diff)
+
+    # extract subplot if resid or residue is not None
+    if residue is not None:
+        diff = extract_matrix_residue(diff, residue)
+    elif resid is not None:
+        diff = extract_matrix_resid(diff, resid, parts, each, first)
+
+    # TODO: renumber ticks after extraction
 
     # plot data
     plt.imshow(diff, cmap='seismic', origin='lower', vmin=-absval, vmax=absval)
@@ -35,10 +100,18 @@ def map_diff(file1, file2):
     plt.savefig('diff_DistanceMap.eps')
     plt.show()
 
-def map_single(file1):
+def map_single(file1, residue, resid, parts, each, first):
 
     # parse data from txt file
     array1 = parse_txt_file(file1)
+
+    # extract subplot if resid or residue is not None
+    if residue is not None:
+        array1 = extract_matrix_residue(array1, residue)
+    elif resid is not None:
+        array1 = extract_matrix_resid(array1, resid, parts, each, first)
+
+    # TODO: renumber ticks after extraction
 
     # plot data
     plt.imshow(array1, cmap='Oranges', origin='lower')
@@ -69,16 +142,29 @@ if __name__ == "__main__":
                             "residues in a single subunit with -n flag AND "
                             "the number of subunits with -- flag."
                             "For each input i, the ith residue of each "
-                            "subunit is extracted for plotting.")
+                            "subunit is taken for plotting. Starts at 0.")
     parser.add_argument("-p", "--parts", type=int,
                         help="How many subunits (analogous parts) comprise "
                              "the protein?")
     parser.add_argument("-e", "--each", type=int,
                         help="How many residues are in each identical subunit?")
+    parser.add_argument("-f", "--first", type=int,
+                        help="What resid number is the first resid?")
 
     args = parser.parse_args()
 
+    if bool(args.residue and args.resid):
+        sys.exit("ERROR: Only specify --resid (-d) OR --residue (-u) not both.")
+
+    # if resid not None, make sure other requirements listed
+    if args.resid:
+        if not bool(args.parts and args.each and args.first):
+            sys.exit("ERROR: Please specify --parts (-p), --each (-e), --first (-f).")
+
+    if args.residue and len(args.residue) == 1:
+        sys.exit("ERROR: At least 2 residues must be listed.")
+
     if args.single:
-        map_single(args.infile[0])
+        map_single(args.infile[0], args.residue, args.resid, args.parts, args.each, args.first)
     else:
-        map_diff(args.infile[0], args.infile[1])
+        map_diff(args.infile, args.residue, args.resid, args.parts, args.each, args.first)
