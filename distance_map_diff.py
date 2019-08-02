@@ -38,7 +38,7 @@ def shortener(array, rowlist, collist):
     for i in collist[1:]:
         array_i = old_cols[i]
         new_cols = np.vstack((new_cols, array_i))
-    fin_array = new_cols.T
+    fin_array = new_cols
     print("Extracted to dimensions: {}".format(fin_array.shape))
 
     return fin_array
@@ -95,7 +95,10 @@ def map_diff(flist, **args):
         diff = extract_matrix_residue(diff, args['residue'])
     elif args['resid'] is not None:
         diff = extract_matrix_resid(diff, args['resid'], args['parts'], args['each'], args['first'])
-    #elif args['row1'] is not None:
+    elif args['row1'] is not None:
+        rowlist = list(range(args['row1'], args['row2'], 1))
+        collist = list(range(args['col1'], args['col2'], 1))
+        diff = shortener(diff, rowlist, collist)
 
     # TODO: renumber ticks after extraction
 
@@ -115,6 +118,10 @@ def map_single(file1, **args):
         array1 = extract_matrix_residue(array1, args['residue'])
     elif args['resid'] is not None:
         array1 = extract_matrix_resid(array1, args['resid'], args['parts'], args['each'], args['first'])
+    elif args['row1'] is not None:
+        rowlist = list(range(args['row1'], args['row2'], 1))
+        collist = list(range(args['col1'], args['col2'], 1))
+        diff = shortener(diff, rowlist, collist)
 
     # TODO: renumber ticks after extraction
 
