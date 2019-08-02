@@ -20,6 +20,29 @@ def get_range(array):
 
     return absval
 
+def shortener(array, rowlist, collist):
+
+    # TODO: IMPROVE THIS. np.take? np.compress?
+
+    # take relevant rows in 2d array
+    print("Initial dimensions: {}".format(array.shape))
+    new_rows = array[rowlist[0]]
+    for i in rowlist[1:]:
+        array_i = array[i]
+        new_rows = np.vstack((new_rows, array_i))
+    print("Extracted to dimensions: {}".format(new_rows.shape))
+
+    # take relevant columns in matrix
+    old_cols = np.copy(new_rows).T
+    new_cols = old_cols[collist[0]]
+    for i in collist[1:]:
+        array_i = old_cols[i]
+        new_cols = np.vstack((new_cols, array_i))
+    fin_array = new_cols.T
+    print("Extracted to dimensions: {}".format(fin_array.shape))
+
+    return fin_array
+
 
 def extract_matrix_residue(array, rlist):
 
@@ -27,26 +50,8 @@ def extract_matrix_residue(array, rlist):
     rlist = [int(x) for x in rlist]
     rlist = np.sort(np.array(rlist))
 
-    # TODO: IMPROVE THIS. np.take? np.compress?
-
-    # take relevant rows in 2d array
-    print("Initial dimensions: {}".format(array.shape))
-    print(rlist, array)
-    new_rows = array[rlist[0]]
-    for i in rlist[1:]:
-        array_i = array[i]
-        new_rows = np.vstack((new_rows, array_i))
-    print("Extracted to dimensions: {}".format(new_rows.shape))
-
-    # take relevant columns in matrix
-    print(new_rows)
-    old_cols = np.copy(new_rows).T
-    new_cols = old_cols[rlist[0]]
-    for i in rlist[1:]:
-        array_i = old_cols[i]
-        new_cols = np.vstack((new_cols, array_i))
-    fin_array = new_cols.T
-    print("Extracted to dimensions: {}".format(fin_array.shape))
+    # extract specified residues
+    fin_array = shortener(array, rlist, rlist)
 
     return fin_array
 
@@ -66,17 +71,16 @@ def extract_matrix_resid(array, rlist, parts, each, first):
 
     # convert resid numbers (single subunit) to line numbers (all units)
     expanded = np.copy(rlist)
-    print("expanded: ", expanded)
     for i in range(1, parts):
-        print(i, each, rlist)
         subunit_i = i*each + rlist
         expanded = np.vstack((expanded, subunit_i))
 
-    fin_array = extract_matrix_residue(array, expanded)
+    # extract specified residues
+    fin_array = shortener(array, expanded, expanded)
 
     return fin_array
 
-def map_diff(flist, residue, resid, parts, each, first):
+def map_diff(flist, **args):
 
     # parse data from txt file
     array1 = parse_txt_file(flist[0])
@@ -87,10 +91,11 @@ def map_diff(flist, residue, resid, parts, each, first):
     absval = get_range(diff)
 
     # extract subplot if resid or residue is not None
-    if residue is not None:
-        diff = extract_matrix_residue(diff, residue)
-    elif resid is not None:
-        diff = extract_matrix_resid(diff, resid, parts, each, first)
+    if args['residue'] is not None:
+        diff = extract_matrix_residue(diff, args['residue'])
+    elif args['resid'] is not None:
+        diff = extract_matrix_resid(diff, args['resid'], args['parts'], args['each'], args['first'])
+    #elif args['row1'] is not None:
 
     # TODO: renumber ticks after extraction
 
@@ -100,16 +105,16 @@ def map_diff(flist, residue, resid, parts, each, first):
     plt.savefig('diff_DistanceMap.eps')
     plt.show()
 
-def map_single(file1, residue, resid, parts, each, first):
+def map_single(file1, **args):
 
     # parse data from txt file
     array1 = parse_txt_file(file1)
 
     # extract subplot if resid or residue is not None
-    if residue is not None:
-        array1 = extract_matrix_residue(array1, residue)
-    elif resid is not None:
-        array1 = extract_matrix_resid(array1, resid, parts, each, first)
+    if args['residue'] is not None:
+        array1 = extract_matrix_residue(array1, args['residue'])
+    elif args['resid'] is not None:
+        array1 = extract_matrix_resid(array1, args['resid'], args['parts'], args['each'], args['first'])
 
     # TODO: renumber ticks after extraction
 
@@ -130,7 +135,7 @@ if __name__ == "__main__":
     parser.add_argument("-s", "--single", action='store_true',
                         help="Only plot a single map and not difference map")
 
-    # options for extracting subplots
+    # options for extracting subplots for ONLY specified residues or resids
     parser.add_argument("-u", "--residue", nargs='+',
                         help="Analgous to VMD 'residue' selection. Residue "
                             "number(s) should match file's line number(s)."
@@ -151,8 +156,20 @@ if __name__ == "__main__":
     parser.add_argument("-f", "--first", type=int,
                         help="What resid number is the first resid?")
 
+    # options for extracting subplots based on specified range(s) (can be asymmetric)
+    parser.add_argument("--row1", type=int,
+                        help="Lower range of what row (x-axis) index to use")
+    parser.add_argument("--row2", type=int,
+                        help="Upper range of what row (x-axis) index to use")
+    parser.add_argument("--col1", type=int,
+                        help="Lower range of what col (y-axis) index to use")
+    parser.add_argument("--col2", type=int,
+                        help="Upper range of what col (y-axis) index to use")
+
+
     args = parser.parse_args()
 
+    # TODO: expand this checking to row1/row2 col1/col2
     if bool(args.residue and args.resid):
         sys.exit("ERROR: Only specify --resid (-d) OR --residue (-u) not both.")
 
@@ -161,10 +178,11 @@ if __name__ == "__main__":
         if not bool(args.parts and args.each and args.first):
             sys.exit("ERROR: Please specify --parts (-p), --each (-e), --first (-f).")
 
+    # heat map useless for single data point
     if args.residue and len(args.residue) == 1:
         sys.exit("ERROR: At least 2 residues must be listed.")
 
     if args.single:
-        map_single(args.infile[0], args.residue, args.resid, args.parts, args.each, args.first)
+        map_single(args.infile[0], **vars(args))
     else:
-        map_diff(args.infile, args.residue, args.resid, args.parts, args.each, args.first)
+        map_diff(args.infile, **vars(args))
