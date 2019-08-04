@@ -54,7 +54,7 @@ python tempy.py
 ```
 cp /nethome/vlim/Desktop/Project/scripts/genmask.cmd
 vi genmask.cmd
-chimera genmask.cmd
+chimera --nogui genmask.cmd
 ```
 
 
