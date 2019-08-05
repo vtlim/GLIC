@@ -1,5 +1,5 @@
 # Scripts for project on GLIC fitting to cryo-EM densities
-Last updated: Jul 30 2019
+Last updated: Aug 05 2019
 
 ## Contents
 
@@ -21,6 +21,7 @@ Last updated: Jul 30 2019
 | `vmd_color_subunit.tcl` | vmd             | color each of five subunits in VMD for when chains not recognized     |
 | `vmd_mask.tcl`          | vmd             | quickly generate/view masked map in vmd; vmd can only write .dx map   |
 | `write_nth_frame.tcl`\* | vmd             | write every nth frame from trajectory as separate pdb file            |
+| `xyz_constrict.tcl`     | vmd             | get coords of constriction site (center of E223 alphaC of 5 subunits) |
 
 \*Note: Located in [misc repo](https://github.com/vtlim/misc)
 
