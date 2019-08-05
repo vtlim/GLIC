@@ -69,5 +69,6 @@ for {set i 0} {$i < 310} {incr i} {
 # write out rmsf info in occupancy column of a PDB file
 animate write pdb rmsf.pdb beg 0 end 0 sel [atomselect top protein]
 close $outDataFile
+exit
 
 
