@@ -19,7 +19,7 @@ proc align_traj { {molid 0} } {
 
     set all [atomselect 0 "all"]
     set compprot [atomselect 0 "backbone and (resid 195 to 314) and (not resid 242 to 253)"]
-    set refprot [atomselect $refmolid "backbone and (resid 195 to 314) and (not resid 242 to 253)" frame 0]
+    set refprot [atomselect $molid "backbone and (resid 195 to 314) and (not resid 242 to 253)" frame 0]
 
     set num_steps [molinfo 0 get numframes]
     for {set frame 0} {$frame < $num_steps} {incr frame} {
@@ -66,7 +66,10 @@ proc align_two { {move_txt "all and not water"} } {
 }
 
 # do the following if script is run as program and NOT imported
-if {$argc == 3} {
+# TODO this doesn't work as import if other scripts also have 2 args...
+# temp work around is to change argc condition to 100 or something when importing
+
+if {$argc == 10} {
 
     set ref_pdb [lindex $argv 0]
     set mov_pdb [lindex $argv 1]
