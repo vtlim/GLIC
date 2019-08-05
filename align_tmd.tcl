@@ -13,40 +13,74 @@
 # __________________________________________________________________________________
 
 
-# maybe skip terminal resid 315 if vmd is unable to read in gro
-set tmd_sel "alpha and (resid 195 to 314) and (not resid 242 to 253)"
+proc align_traj { {molid 0} } {
+    # molid 0 frame 0 used as reference for alignment
+    # molid x can be aligned against reference
 
-set ref_pdb [lindex $argv 0]
-set mov_pdb [lindex $argv 1]
+    set all [atomselect 0 "all"]
+    set compprot [atomselect 0 "backbone and (resid 195 to 314) and (not resid 242 to 253)"]
+    set refprot [atomselect $refmolid "backbone and (resid 195 to 314) and (not resid 242 to 253)" frame 0]
 
-# =============================================================== #
-
-mol new $ref_pdb
-mol new $mov_pdb
-
-set ref_sel [atomselect 0 "$tmd_sel"]
-set mov_sel [atomselect 1 "$tmd_sel"]
-set mov_all [atomselect 1 "all and not water"]
-#set mov_all [atomselect 1 "protein"]
-
-set matrix [measure fit $mov_sel $ref_sel]
-
-$mov_all move $matrix
-animate write gro system_dry.gro sel $mov_all
-#animate write pdb system_dry.pdb sel $mov_all
+    set num_steps [molinfo 0 get numframes]
+    for {set frame 0} {$frame < $num_steps} {incr frame} {
+        $compprot frame $frame
+        $all frame $frame
+        $all move [measure fit $compprot $refprot]
+    }
+}
 
 
-# handle water separately since vmd doesn't write moved crds for all (> 99998 = too many?)
-# CHECK FINAL STRUCTURE
-set wat_sel1 [atomselect 1 "water and index <= 90000"]
-set wat_sel2 [atomselect 1 "water and index > 90000"]
-$wat_sel1 move $matrix
-$wat_sel2 move $matrix
-animate write gro wat1.gro sel $wat_sel1
-animate write gro wat2.gro sel $wat_sel2
+# proc for importing into other scripts
+# extra braces are needed for default parameter
+proc align_two { {move_txt "all and not water"} } {
+    # aligns mols with molids 0 and 1 and one frame each
 
-puts "\n==================================="
-puts "\n\nThe move matrix is $matrix"
-puts "\n==================================="
+    # maybe skip terminal resid 315 if vmd is unable to read in gro
+    set tmd_sel "backbone and (resid 195 to 314) and (not resid 242 to 253)"
 
-exit
+    # create vmd atom selections
+    set ref_sel [atomselect 0 "$tmd_sel"]
+    set mov_sel [atomselect 1 "$tmd_sel"]
+    set mov_all [atomselect 1 "$move_txt"]
+
+    # compute and actualize the move matrix
+    set matrix [measure fit $mov_sel $ref_sel]
+    $mov_all move $matrix
+
+    # handle water separately since vmd doesn't write moved crds for all (> 99998 = too many?)
+    # CHECK FINAL STRUCTURE
+    #set wat_sel1 [atomselect 1 "water and index <= 90000"]
+    #set wat_sel2 [atomselect 1 "water and index > 90000"]
+    #$wat_sel1 move $matrix
+    #$wat_sel2 move $matrix
+    #animate write gro wat1.gro sel $wat_sel1
+    #animate write gro wat2.gro sel $wat_sel2
+
+
+    puts "\n==================================="
+    puts "\n\nThe move matrix is $matrix"
+    puts "\n==================================="
+
+    return [array get matrix]
+
+}
+
+# do the following if script is run as program and NOT imported
+if {$argc == 3} {
+
+    set ref_pdb [lindex $argv 0]
+    set mov_pdb [lindex $argv 1]
+    mol new $ref_pdb
+    mol new $mov_pdb
+
+    set move_txt "all and not water"
+    #set move_txt "protein"
+
+    # can't pass matrix info from proc to here? (TODO)
+    set matrix [align_two $move_txt]
+
+    animate write gro system_dry.gro sel [atomselect 1 "$move_txt"]
+    #animate write pdb system_dry.pdb sel $mov_all
+
+    exit
+}
