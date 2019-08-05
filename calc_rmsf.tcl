@@ -38,7 +38,11 @@ set dumid 0
 # rmsf calculation
 puts "Calculating RMSF..."
 
-for {set i 0} {$i < 310} {incr i} {
+#for {set i 0} {$i < 310} {incr i}
+#for {set i 311} {$i < 621} {incr i}
+#for {set i 622} {$i < 932} {incr i}
+#for {set i 933} {$i < 1243} {incr i}
+for {set i 1244} {$i < 1554} {incr i} {
 
     set whole [atomselect top "protein and residue $i"]
     set group [atomselect top "protein and residue $i and noh"]
