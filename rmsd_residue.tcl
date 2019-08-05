@@ -1,9 +1,9 @@
 
 # __________________________________________________________________________________
 #
-# rmsd_pairwise.tcl
+# rmsd_residue.tcl
 # Purpose:          Compute RMSD between each pair of residues in two GLIC structures.
-# Usage:            vmdt -e rmsd_pairwise.tcl -args file1.pdb file2.pdb
+# Usage:            vmdt -e rmsd_residue.tcl -args file1.pdb file2.pdb
 #
 # TODO:
 # - Redundant code from align_tmd.tcl
