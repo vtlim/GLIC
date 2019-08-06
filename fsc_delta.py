@@ -55,7 +55,7 @@ for f in files:
     labels.append(f.split("_")[-1].split(".")[0]) # prefix_label.xml
 
 # define plot colors
-colors = plt.cm.Set1(np.linspace(0, 1, 10))               # discrete
+colors = plt.cm.tab10(np.linspace(0, 1, 10))               # discrete
 #colors = plt.cm.coolwarm_r(np.linspace(0, 1, len(yarray))) # diverging
 
 # plot fsc curves
