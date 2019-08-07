@@ -1,9 +1,10 @@
 
-# Process for fitting structure to density map in Bayesian fitting MD simulations
+# Fit structure to density using Bayesian fitting MD simulations
 
-## Route 1: With non-equilibrated structure
+Last edited: Aug 07 2019
 
-1. Prepare and organize [1] structure coordinates, [2] map files, [3] GROMACS configuration files.
+
+1. Prepare and organize [1] structure coordinates, [2] map files (these should be aligned with the structure), [3] GROMACS configuration files.
 Edit config files as appropriate.
 
 ```
@@ -11,10 +12,6 @@ ln -s ../adjust_map/07_newmap/03_mask.mrc GLIC_pH3_half1.mrc
 ln -s ../adjust_map/07_newmap/blur_03_mask.mrc GLIC_pH3_half1_blur.mrc
 ln -s ../adjust_map/07_newmap/shrp_03_mask.mrc GLIC_pH3_half1_sharp.mrc
 ```
-
-## Route 2: With pre-equilibrated structure
-
-1. Same as step 1 above.
 
 2. Call the GROMACS preprocessor for stage 1 of fitting `MainChain` to blurred map.
 
