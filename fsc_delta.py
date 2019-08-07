@@ -5,7 +5,7 @@ import xmltodict
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_format(plt):
+def plot_format(plt, delta=True):
     plt.legend(fontsize=16, loc=1)         # discrete
 #    plt.legend(fontsize=16, loc=1, ncol=2)  # diverging
 
@@ -19,11 +19,19 @@ def plot_format(plt):
     ax = plt.gca()
     ax.grid(axis='y', linewidth=0.5)
 
-    # add x-axis label
-    plt.xlabel("spatial frequency ($\AA^{-1}$)", fontsize=18)
-
     # increase tick font size
     ax.tick_params(axis='both', which='major', labelsize=16)
+
+    # add extra details for spatial freq ticks excluding x=-0.1,0,0.7
+    lp=0
+    deets = ['(1/10.0)','(1/5.00)','(1/3.33)','(1/2.50)','(1/2.00)','(1/1.67)']
+    if not delta:
+        for i, xpos in enumerate(ax.get_xticks()[2:8]):
+            ax.text(xpos, -0.25, deets[i], size = 12, ha = 'center')
+        lp=20
+
+    # add x-axis label
+    plt.xlabel("spatial frequency ($\AA^{-1}$)", fontsize=18, labelpad=lp)
 
     return plt, ax
 
@@ -61,8 +69,15 @@ colors = plt.cm.tab10(np.linspace(0, 1, 10))               # discrete
 # plot fsc curves
 for i, (y, l) in enumerate(zip(yarray, labels)):
     plt.plot(xlist, y, label=l, c=colors[i])
+plt, ax = plot_format(plt, delta=False)
 
-plt, ax = plot_format(plt)
+# find resolution at y=0.143
+idx = (np.abs(np.array(yarray[-1])-0.143)).argmin()
+ax.axhline(0.143, color='grey', ls='--', lw=0.5)
+ax.axvline(xlist[idx], color='grey', ls='--', lw=0.5)
+plt.text(x=-0.025, y=-0.065, s='{} $\AA$\n({:4.3f}, {})'.format(round(1/xlist[idx], 2), xlist[idx], 0.143))
+
+
 plt.ylabel('correlation', rotation=0, ha='right', fontsize=18)
 plt.savefig('fsc.png', bbox_inches='tight')
 plt.show()
