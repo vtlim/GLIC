@@ -1,5 +1,5 @@
 # Scripts for project on GLIC fitting to cryo-EM densities
-Last updated: Aug 05 2019
+Last updated: Aug 07 2019
 
 ## Contents
 
@@ -7,6 +7,7 @@ Last updated: Aug 05 2019
 |-----------------------|-------------------|-----------------------------------------------------------------------|
 | `align_tmd.tcl`       | vmd               | align GLIC structure against its transmembrane domain                 |
 | `calc_rmsf.tcl`       | vmd               | calculate RMSF of specified residues                                  |
+|`chap_plot_together.py`| python            | plot multiple json files together from CHAP pore analysis
 | `decompose_matrix.py` | python            | decompose matrix extracted from `align_tmd.tcl` into rot, transl, etc.|
 | `density_chimera.py`  | python, chimera   | generate synthetic density in chimera for each structure              |
 | `distance_map_diff.py`| python            | plot heat map for one distance map minus another from nanoHUB output  |
