@@ -1,10 +1,20 @@
 # in an open VMD session, source this file
 # "source /nethome/vlim/Desktop/Project/scripts/vmd_representations/glic_macros.vmd" 
-atomselect macro ecd {resid 5 to 194}
-atomselect macro tmd {resid 195 to 315}
-atomselect macro m2 { resid 220 to 247 }
+
+# general features
+atomselect macro ecd { resid 5 to 194   }
+atomselect macro tmd { resid 195 to 315 }
+atomselect macro m2  { resid 220 to 247 }
+
+# segments in tmd
 atomselect macro chainA { residue 0 to 310 } 
 atomselect macro chainB { residue 311 to 621 }
 atomselect macro chainC { residue 622 to 932 }
 atomselect macro chainD { residue 933 to 1243 }
 atomselect macro chainE { residue 1244 to 1554 }
+
+# loops
+atomselect macro loopC    { resid 169 to 183 }
+atomselect macro loopM23  { resid 246 to 254 }
+atomselect macro loopCys  { resid 113 to 122 }
+atomselect macro loopBeta { resid  30 to  35 }
