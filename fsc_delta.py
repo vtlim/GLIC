@@ -71,11 +71,11 @@ for i, (y, l) in enumerate(zip(yarray, labels)):
     plt.plot(xlist, y, label=l, c=colors[i])
 plt, ax = plot_format(plt, delta=False)
 
-# find resolution at y=0.143
-idx = (np.abs(np.array(yarray[-1])-0.143)).argmin()
+# find resolution at y=0.143 -- TODO: needs interpolation else this just finds closest y-point
+#idx = (np.abs(np.array(y)-0.143)).argmin()
 ax.axhline(0.143, color='grey', ls='--', lw=0.5)
-ax.axvline(xlist[idx], color='grey', ls='--', lw=0.5)
-plt.text(x=-0.025, y=-0.065, s='{} $\AA$\n({:4.3f}, {})'.format(round(1/xlist[idx], 2), xlist[idx], 0.143))
+#ax.axvline(xlist[idx], color='grey', ls='--', lw=0.5)
+#plt.text(x=-0.025, y=-0.065, s='{} $\AA$\n({:4.3f}, {})'.format(round(1/xlist[idx], 2), xlist[idx], 0.143))
 
 
 plt.ylabel('correlation', rotation=0, ha='right', fontsize=18)
