@@ -22,17 +22,18 @@ ln -s ../adjust_map/07_newmap/shrp_03_mask.mrc GLIC_pH3_half1_sharp.mrc
 3. Continue simulation stages with edited mdp file.
     1. Continuation of same stage with higher force constant
 
-```
-~/local/gromacs-df2/bin/gmx grompp -f blur02_.mdp -c blur01.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o blur02.tpr -t blur01.cpt
-```
+    ```
+    ~/local/gromacs-df2/bin/gmx grompp -f blur02_.mdp -c blur01.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o blur02.tpr -t blur01.cpt
+    ```
+
 
     2. Continuation onto next stage of blur --> orig
 
-```
-~/local/gromacs-df2/bin/gmx grompp -f orig01_.mdp -c blur02.part0001.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o orig01.tpr -t blur02.cpt
+    ```
+    ~/local/gromacs-df2/bin/gmx grompp -f orig01_.mdp -c blur02.part0001.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o orig01.tpr -t blur02.cpt
 
-~/local/gromacs-df2/bin/gmx grompp -f sharp01_nvt.mdp -c orig01.part0001.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o sharp01.tpr -t orig01.cpt
-```
+    ~/local/gromacs-df2/bin/gmx grompp -f sharp01_nvt.mdp -c orig01.part0001.gro -p ../../01_reference/yz/GLIC_pH70_POPC_SOL_ION.top -o sharp01.tpr -t orig01.cpt
+    ```
 
 4. To extend a simulation with no change to mdp file, input time in ps to extend flag:
 
@@ -43,6 +44,6 @@ ln -s ../adjust_map/07_newmap/shrp_03_mask.mrc GLIC_pH3_half1_sharp.mrc
 5. Take a look at the trajectory. To wrap:
 
 ```
-gmx trjconv -s densfit03.tpr -f densfit03.part0002.xtc -o densfit03_nopbc.xtc -pbc mol -center
+gmx trjconv -s sharp01.tpr -f sharp01.part0002.xtc -o sharp01_nopbc.xtc -pbc mol -center
 ```
 
