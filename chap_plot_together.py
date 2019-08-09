@@ -18,7 +18,7 @@ def plot_together(infiles):
     # load files
     dict_list = []
     lab_list = []
-    colors = ['black', 'red', 'blue']
+    colors = ['black', 'red', 'blue', 'green']
 
     for f in infiles:
         with open(f) as json_file:
@@ -32,9 +32,18 @@ def plot_together(infiles):
 
     for d, l, c in zip(dict_list, lab_list, colors):
 
-        ax.plot(np.array(d["pathwayProfile"]["radiusMean"]) * 10,
+        ax.plot(np.array(d["pathwayProfile"]["radiusMean"])*10,
                 -np.array(d["pathwayProfile"]["s"]),
                 color=c, linewidth=4, label=l)
+
+        radius_sd = np.array(d["pathwayProfile"]["radiusSd"])*10
+
+        ax.fill_betweenx(-np.array(d["pathwayProfile"]["s"]),
+                np.array(d["pathwayProfile"]["radiusMean"])*10 - radius_sd,
+                np.array(d["pathwayProfile"]["radiusMean"])*10 + radius_sd,
+                facecolor = "#000000",
+                alpha = 0.2)
+
 
     ax.set_xlim(0,15)
     ax.set_ylim(-6,11)
