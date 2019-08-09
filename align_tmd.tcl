@@ -14,12 +14,14 @@
 
 
 proc align_traj { {molid 0} } {
-    # molid 0 frame 0 used as reference for alignment
-    # molid x can be aligned against reference
+    # parameter molid x can be aligned against reference
+    # molid 0 frame 0 is set as reference for alignment
+    set align_txt "backbone and (resid 195 to 314) and (not resid 242 to 253)"
+    set align_txt "alpha and resid 233" ;# 9' position (I232)
 
-    set all [atomselect 0 "all"]
-    set compprot [atomselect 0 "backbone and (resid 195 to 314) and (not resid 242 to 253)"]
-    set refprot [atomselect $molid "backbone and (resid 195 to 314) and (not resid 242 to 253)" frame 0]
+    set refprot [atomselect 0 "$align_txt" frame 0]
+    set compprot [atomselect $molid "$align_txt"]
+    set all [atomselect $molid "all"]
 
     set num_steps [molinfo 0 get numframes]
     for {set frame 0} {$frame < $num_steps} {incr frame} {
