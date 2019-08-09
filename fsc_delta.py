@@ -27,7 +27,7 @@ def plot_format(plt, delta=True):
     deets = ['(1/10.0)','(1/5.00)','(1/3.33)','(1/2.50)','(1/2.00)','(1/1.67)']
     if not delta:
         for i, xpos in enumerate(ax.get_xticks()[2:8]):
-            ax.text(xpos, -0.25, deets[i], size = 12, ha = 'center')
+            ax.text(xpos, -0.30, deets[i], size = 12, ha = 'center')
         lp=20
 
     # add x-axis label
@@ -65,6 +65,7 @@ for f in files:
 # define plot colors
 colors = plt.cm.tab10(np.linspace(0, 1, 10))               # discrete
 #colors = plt.cm.coolwarm_r(np.linspace(0, 1, len(yarray))) # diverging
+colors = np.vstack( ([0, 0, 0, 1], plt.cm.Paired(np.linspace(0, 1, 13))) ) # paired except first
 
 # plot fsc curves
 for i, (y, l) in enumerate(zip(yarray, labels)):
