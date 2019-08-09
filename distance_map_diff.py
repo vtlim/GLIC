@@ -103,7 +103,8 @@ def map_diff(flist, **args):
     # TODO: renumber ticks after extraction
 
     # plot data
-    plt.imshow(diff, cmap='seismic', origin='lower', vmin=-absval, vmax=absval)
+    #plt.imshow(diff, cmap='seismic', origin='lower', vmin=-absval, vmax=absval)
+    plt.imshow(diff, cmap='seismic', origin='lower', vmin=-10, vmax=10)
     plt.colorbar()
     plt.savefig('diff_DistanceMap.eps')
     plt.show()
