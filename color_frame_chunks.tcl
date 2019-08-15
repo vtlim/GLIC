@@ -1,4 +1,10 @@
 ##
+## Usage:
+##  1) Edit frame numbers in the for loop sections
+##  2) Increment the number after "set user" consecutively
+##  3) Edit the last number of "scaleminmax" to highest "user" value
+##  4) In an open VMD session where traj is mol ID 0, call "source color_frames.tcl"
+##
 ## Adapted from: https://www.ks.uiuc.edu/Research/vmd/mailing_list/vmd-l/att-2493/usercolor.vmd
 ##
 set sel [atomselect top "all"]
