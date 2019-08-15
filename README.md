@@ -8,7 +8,7 @@ Last updated: Aug 15 2019
 | `align_tmd.tcl`       | vmd               | align GLIC structure against its transmembrane domain                 |
 | `calc_rmsf.tcl`       | vmd               | calculate RMSF of specified residues                                  |
 |`chap_plot_together.py`| python            | plot multiple json files together from CHAP pore analysis             |
-|`color_frame_chunks.tcl`| vmd              | color selection by each specified set of frames                       |
+| `color_frames.tcl`    | vmd               | color selection by each specified set of frames                       |
 | `decompose_matrix.py` | python            | decompose matrix extracted from `align_tmd.tcl` into rot, transl, etc.|
 | `density_chimera.py`  | python, chimera   | generate synthetic density in chimera for each structure              |
 | `distance_map_diff.py`| python            | plot heat map for one distance map minus another from nanoHUB output  |
