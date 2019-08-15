@@ -21,7 +21,7 @@ for {set i 12} {$i<63} {incr i} {
   animate goto $i
   $sel frame $i
   puts "Setting User data for frame [$sel frame] ..."
-  $sel set user 50
+  $sel set user 1
 }
 
 # COLOR CHUNK 3
@@ -29,7 +29,7 @@ for {set i 63} {$i<85} {incr i} {
   animate goto $i
   $sel frame $i
   puts "Setting User data for frame [$sel frame] ..."
-  $sel set user 101
+  $sel set user 2
 }
 $sel delete
 
@@ -39,6 +39,7 @@ $sel delete
 ##
 mol modcolor 0 0 User
 mol colupdate 0 0 1
-mol scaleminmax 0 0 0.0 $numframes
+#mol scaleminmax 0 0 0.0 $numframes
+mol scaleminmax 0 0 0.0 2.0
 animate forward
 
