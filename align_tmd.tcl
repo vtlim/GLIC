@@ -71,7 +71,8 @@ proc align_two { {move_txt "all and not water"} } {
 # TODO this doesn't work as import if other scripts also have 2 args...
 # temp work around is to change argc condition to 100 or something when importing
 
-if {$argc == 10} {
+#if {$argc == 10}
+if {$argc == 3} {
 
     set ref_pdb [lindex $argv 0]
     set mov_pdb [lindex $argv 1]
