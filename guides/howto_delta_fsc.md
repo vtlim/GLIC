@@ -1,6 +1,6 @@
 # Evaluate change in Fourier shell correlation (FSC) during fitting simulation
 
-Last edited: Jul 22 2019
+Last edited: Oct 24 2019
 
 Goal: Assess map-model agreement from density fitting. In this example, I have a series of three simulations which continue from each other. The first two are 1 ns each, and the third is 5 ns. My objective is to calculate the FSC at regular intervals during the fitting simulations and see how the FSC curves change over time.
 
@@ -23,14 +23,16 @@ gmx trjconv -s orig01.tpr -f orig01_1000ps.gro -o ph5_01_fin.pdb              # 
 for k in {0..13}; do echo $k; grep -v "M[CN]" ph3_01_$k.pdb > ph3_02_$k.pdb; done
 ```
 
-3. Use original tempy move script to invert move back to original map placement. 
+3. Use original tempy move script to invert move back to original map placement.  
+[EDIT: Skip this step since translating the structure from inverse tempy script may lose fitting improvements during MD]  
+
     * It's easier to use `tempy_pdb.py` and update the values in there rather than to use the original `tempy.py` script due to slight syntactical diffrences. 
     * Make sure you put the angles in the inverted order of z y x instead of x y z.
     * While this script does generate a map .mrc file, I don't use them because some of the FSC curves have an artifact of -1 value at inverse spatial resolution of x=0.
 
 ```
 cp /nethome/vlim/Desktop/Project/scripts/tempy_pdb.py .
-vi -o tempy_pdb.py ../../adjust_map/06_blur/tempy_df02_orig.py tempy_pdb.py
+vi -o tempy_pdb.py ../../adjust_map/06_blur/tempy_df02_orig.py
 conda activate tempy
 
 for k in {0..13}; do echo $k; python tempy_pdb.py GLIC_pH3_half1_unfil.mrc ph3_02_$k.pdb; mv moved.pdb ph3_03_$k.pdb; done
@@ -41,6 +43,8 @@ for k in {0..13}; do echo $k; python tempy_pdb.py GLIC_pH3_half1_unfil.mrc ph3_0
 ```
 cp /nethome/vlim/Desktop/Project/scripts/genmap.cmd .
 vi genmap.cmd
+
+module load chimera
 python /nethome/vlim/Desktop/Project/scripts/density_chimera.py
 ```
 
