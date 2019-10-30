@@ -16,5 +16,6 @@ atomselect macro chainE { residue 1244 to 1554 }
 # loops
 atomselect macro loopC    { resid 169 to 183 }
 atomselect macro loopM23  { resid 246 to 254 }
+atomselect macro loopM34  { resid 282 to 287 }
 atomselect macro loopCys  { resid 113 to 122 }
 atomselect macro loopBeta { resid  30 to  35 }
