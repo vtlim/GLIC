@@ -23,6 +23,7 @@ foreach dcd $dcdlist {
 
 # align system
 source /mnt/cephfs/projects/2019070101_GLIC_density_fitting_MD/Desktop/scripts/align_tmd.tcl
+#source /home/limvt/Documents/gitglic/align_tmd.tcl
 align_traj
 
 # open file for writing output
@@ -38,11 +39,13 @@ set dumid 0
 # rmsf calculation
 puts "Calculating RMSF..."
 
-#for {set i 0} {$i < 311} {incr i} {
+# can limit to residues in certain subunits but make sure to remove/add curly brace
+# when not in use. even if curly brace is commented it may confuse vmd.
+#for {set i 0} {$i < 311} {incr i}
 for {set i 311} {$i < 622} {incr i} {
-#for {set i 622} {$i < 933} {incr i} {
-#for {set i 933} {$i < 1244} {incr i} {
-#for {set i 1244} {$i < 1555} {incr i} {
+#for {set i 622} {$i < 933} {incr i}
+#for {set i 933} {$i < 1244} {incr i}
+#for {set i 1244} {$i < 1555} {incr i}
 
     set whole [atomselect top "protein and residue $i"]
     set group [atomselect top "protein and residue $i and noh"]
