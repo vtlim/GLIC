@@ -4,7 +4,10 @@
 # general features
 atomselect macro ecd { resid 5 to 194   }
 atomselect macro tmd { resid 195 to 315 }
+atomselect macro m1  { resid 195 to 219 }
 atomselect macro m2  { resid 220 to 247 }
+atomselect macro m3  { resid 254 to 283 }
+atomselect macro m4  { resid 284 to 314 }
 
 # segments in tmd
 atomselect macro chainA { residue 0 to 310 } 
@@ -14,6 +17,7 @@ atomselect macro chainD { residue 933 to 1243 }
 atomselect macro chainE { residue 1244 to 1554 }
 
 # loops
+atomselect macro loop2    { resid 155 to 161 }
 atomselect macro loopC    { resid 169 to 183 }
 atomselect macro loopM23  { resid 246 to 254 }
 atomselect macro loopM34  { resid 282 to 287 }
