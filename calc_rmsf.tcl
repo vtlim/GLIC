@@ -38,12 +38,11 @@ set dumid 0
 # rmsf calculation
 puts "Calculating RMSF..."
 
-# can limit to resids in certain subunit but make sure to remove/add {
-for {set i 0} {$i < 311} {incr i} {
-#for {set i 311} {$i < 622} {incr i}
-#for {set i 622} {$i < 933} {incr i}
-#for {set i 933} {$i < 1244} {incr i}
-#for {set i 1244} {$i < 1555} {incr i}
+#for {set i 0} {$i < 311} {incr i} {
+for {set i 311} {$i < 622} {incr i} {
+#for {set i 622} {$i < 933} {incr i} {
+#for {set i 933} {$i < 1244} {incr i} {
+#for {set i 1244} {$i < 1555} {incr i} {
 
     set whole [atomselect top "protein and residue $i"]
     set group [atomselect top "protein and residue $i and noh"]
