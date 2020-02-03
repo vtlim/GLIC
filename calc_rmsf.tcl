@@ -2,8 +2,8 @@
 #
 # calc_rmsf.tcl
 # Purpose:          Measure RMSF along trajectory.
-# Usage:            vmdt -e calc_rmsf.tcl -args inpsf indcd selection,txt
-# Example:          vmdt -e calc_rmsf.tcl -args file.gro file.xtc resid,223
+# Usage:            vmdt -e calc_rmsf.tcl -args inpsf indcd
+# Example:          vmdt -e calc_rmsf.tcl -args file.gro file.xtc
 #
 # Notes:
 # - VMD can take in .gro(.xtc) files in place of .pdb(.dcd) files.
@@ -22,7 +22,7 @@ foreach dcd $dcdlist {
 }
 
 # align system
-source /nethome/vlim/Desktop/Project/scripts/align_tmd.tcl
+source /mnt/cephfs/projects/2019070101_GLIC_density_fitting_MD/Desktop/scripts/align_tmd.tcl
 align_traj
 
 # open file for writing output
@@ -38,11 +38,12 @@ set dumid 0
 # rmsf calculation
 puts "Calculating RMSF..."
 
-#for {set i 0} {$i < 310} {incr i}
-#for {set i 311} {$i < 621} {incr i}
-#for {set i 622} {$i < 932} {incr i}
-#for {set i 933} {$i < 1243} {incr i}
-for {set i 1244} {$i < 1554} {incr i} {
+# can limit to resids in certain subunit but make sure to remove/add {
+for {set i 0} {$i < 311} {incr i} {
+#for {set i 311} {$i < 622} {incr i}
+#for {set i 622} {$i < 933} {incr i}
+#for {set i 933} {$i < 1244} {incr i}
+#for {set i 1244} {$i < 1555} {incr i}
 
     set whole [atomselect top "protein and residue $i"]
     set group [atomselect top "protein and residue $i and noh"]

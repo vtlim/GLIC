@@ -17,7 +17,7 @@ proc align_traj { {molid 0} } {
     # parameter molid x can be aligned against reference
     # molid 0 frame 0 is set as reference for alignment
     set align_txt "backbone and (resid 195 to 314) and (not resid 242 to 253)"
-    set align_txt "alpha and resid 233" ;# 9' position (I232)
+    #set align_txt "alpha and resid 233" ;# 9' position (I232)
 
     set refprot [atomselect 0 "$align_txt" frame 0]
     set compprot [atomselect $molid "$align_txt"]
@@ -67,12 +67,12 @@ proc align_two { {move_txt "all and not water"} } {
 
 }
 
-# do the following if script is run as program and NOT imported
-# TODO this doesn't work as import if other scripts also have 2 args...
+# sometimes this condition will be triggered even if imported
+# when it's imported into a script thta also uses 2 arguments
 # temp work around is to change argc condition to 100 or something when importing
 
-#if {$argc == 10}
-if {$argc == 3} {
+if {$argc == 10} {
+#if {$argc == 3}
 
     set ref_pdb [lindex $argv 0]
     set mov_pdb [lindex $argv 1]
