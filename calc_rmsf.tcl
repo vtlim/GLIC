@@ -47,8 +47,13 @@ for {set i 311} {$i < 622} {incr i} {
 #for {set i 933} {$i < 1244} {incr i}
 #for {set i 1244} {$i < 1555} {incr i}
 
+    # define 'whole' for which atoms have occupancy set in output pdb
     set whole [atomselect top "protein and residue $i"]
-    set group [atomselect top "protein and residue $i and noh"]
+
+    # define 'group' for RMSF selection
+    set group [atomselect top "protein and residue $i and name CA"]
+
+    # define 'dummy' for RMSF calculation in case 'group' is more than one atom
     set dummy [atomselect top "index $dumid"]
 
     puts "$i ([$group num] atoms)"
